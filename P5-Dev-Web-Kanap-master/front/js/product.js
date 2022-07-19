@@ -13,7 +13,7 @@ fetch("http://localhost:3000/api/products/" + idUrl)
             return data.json();
         }
     })
-    
+
 
     //insere le produit dans la page
     .then(function (productList) {
@@ -36,29 +36,79 @@ fetch("http://localhost:3000/api/products/" + idUrl)
             let baliseOption = document.getElementsByTagName('option');
             baliseOption[i].setAttribute("value", productList.colors);
             //add color in list
-            baliseOption[i].innerHTML=productList.colors;
+            baliseOption[i].innerHTML = productList.colors;
             i++;
         }
-        
-   //add name description price
-document.getElementById('title').innerHTML+=`${productList.name}`;
-document.getElementById('description').innerHTML+=`${productList.description}`;
-document.getElementById('price').innerHTML+=`${productList.price}`;
+        //         let variable1;
+        //         let variable2;
+        // function addElementById(variable1,variable2){
+        //     document.getElementById('variable1').innerHTML += `${variable2}`;
+        // }
+        // addElementById(title,productList.name);
+        // addElementById(description,productList.description);
+        // addElementById(price,productList.price);
+
+        //  add name description price
+        document.getElementById('title').innerHTML += `${productList.name}`;
+        document.getElementById('description').innerHTML += `${productList.description}`;
+        document.getElementById('price').innerHTML += `${productList.price}`;
 
     })
-  //////////////////////
-  //     add cart     //
-  //////////////////////
 
 
-  const elt= document.getElementById('addToCart');
-  elt.addEventListener('click',function(){
-    var quantityChoose = document.getElementById('quantity').value;
-    var colorChoose = document.getElementById('colors').value;
-    console.log(quantityChoose);
-    console.log(colorChoose);
-    localStorage.setItem("idUrl", "quantityChoose", "colorChoose");
-        console.log(idUrl);
-       var bla= localStorage.getItem("quantityChoose");
-       console.log(quantityChoose);
-  })
+//////////////////////
+//     add cart     //
+//////////////////////
+
+
+const elt = document.getElementById('addToCart');
+
+elt.addEventListener('click', function () {
+    let quantityChoose = document.getElementById('quantity').value;
+    let colorChoose = document.getElementById('colors').value;
+
+    //array 
+    let objetJson = {
+        idProduct: idUrl,
+        quantityItem: quantityChoose,
+        colorItems: colorChoose
+    };
+
+    //conversion json ==> javascript
+    let produitEnregistreDansLeLocalStorage = JSON.parse(localStorage.getItem('objetL'));
+
+
+    //verification si cart dans localStorage et ajout produit dans localStorage
+    if (produitEnregistreDansLeLocalStorage) {
+        console.log(produitEnregistreDansLeLocalStorage);
+        let lengthCart = produitEnregistreDansLeLocalStorage.length;
+
+        for (let i = 0; i <= lengthCart; i++) {
+
+            if (objetJson.idProduct == produitEnregistreDansLeLocalStorage[i].idProduct && objetJson.colorItems == produitEnregistreDansLeLocalStorage[i].colorItems) {
+                let quantityCartProduct = Number(objetJson.quantityItem);
+                let quantityAddProduct = Number(produitEnregistreDansLeLocalStorage.quantityItem);
+                objetJson.quantityItem = quantityCartProduct + quantityAddProduct;
+                
+                objetJson.push(objetJson.quantityItem);
+                // localStorage.removeItem("prenom");
+
+                break;
+            }
+
+            else if (i == lengthCart) {
+                // add new item
+                produitEnregistreDansLeLocalStorage.push(objetJson);
+                localStorage.setItem("objetL", JSON.stringify(produitEnregistreDansLeLocalStorage));
+            }
+        }
+    }
+
+    else {
+        produitEnregistreDansLeLocalStorage = [];
+        produitEnregistreDansLeLocalStorage.push(objetJson);
+        localStorage.setItem("objetL", JSON.stringify(produitEnregistreDansLeLocalStorage));
+
+    }
+
+})
