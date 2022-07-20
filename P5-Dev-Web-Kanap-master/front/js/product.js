@@ -39,20 +39,12 @@ fetch("http://localhost:3000/api/products/" + idUrl)
             baliseOption[i].innerHTML = productList.colors;
             i++;
         }
-        //         let variable1;
-        //         let variable2;
-        // function addElementById(variable1,variable2){
-        //     document.getElementById('variable1').innerHTML += `${variable2}`;
-        // }
-        // addElementById(title,productList.name);
-        // addElementById(description,productList.description);
-        // addElementById(price,productList.price);
-
-        //  add name description price
-        document.getElementById('title').innerHTML += `${productList.name}`;
-        document.getElementById('description').innerHTML += `${productList.description}`;
-        document.getElementById('price').innerHTML += `${productList.price}`;
-
+        function addElementById(variable1,variable2){
+        document.getElementById(variable1).textContent = variable2;
+        }
+        addElementById('title',productList.name);
+        addElementById('description',productList.description);
+        addElementById('price',productList.price);
     })
 
 
@@ -75,40 +67,41 @@ elt.addEventListener('click', function () {
     };
 
     //conversion json ==> javascript
-    let produitEnregistreDansLeLocalStorage = JSON.parse(localStorage.getItem('objetL'));
+    let listLocalStorage = JSON.parse(localStorage.getItem('objetL'));
 
 
     //verification si cart dans localStorage et ajout produit dans localStorage
-    if (produitEnregistreDansLeLocalStorage) {
-        console.log(produitEnregistreDansLeLocalStorage);
-        let lengthCart = produitEnregistreDansLeLocalStorage.length;
+    if (listLocalStorage) {
+              let lengthCart = listLocalStorage.length;
+        for (let i =0; i+1 <= lengthCart;i++){
+            
+            if (listLocalStorage[i].idProduct==idUrl && listLocalStorage[i].colorItems == colorChoose) {
 
-        for (let i = 0; i <= lengthCart; i++) {
-
-            if (objetJson.idProduct == produitEnregistreDansLeLocalStorage[i].idProduct && objetJson.colorItems == produitEnregistreDansLeLocalStorage[i].colorItems) {
-                let quantityCartProduct = Number(objetJson.quantityItem);
-                let quantityAddProduct = Number(produitEnregistreDansLeLocalStorage.quantityItem);
-                objetJson.quantityItem = quantityCartProduct + quantityAddProduct;
-                
-                objetJson.push(objetJson.quantityItem);
-                // localStorage.removeItem("prenom");
-
+                listLocalStorage[i].quantityItem = Number(listLocalStorage[i].quantityItem)+ Number(objetJson.quantityItem);
+                localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
+                console.log(listLocalStorage);
+                console.log(3);
                 break;
             }
 
-            else if (i == lengthCart) {
+            else if (i+1 == lengthCart) {
                 // add new item
-                produitEnregistreDansLeLocalStorage.push(objetJson);
-                localStorage.setItem("objetL", JSON.stringify(produitEnregistreDansLeLocalStorage));
+                listLocalStorage.push(objetJson);
+                localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
+                console.log(listLocalStorage);
+                console.log(2);
             }
+            
         }
     }
 
     else {
-        produitEnregistreDansLeLocalStorage = [];
-        produitEnregistreDansLeLocalStorage.push(objetJson);
-        localStorage.setItem("objetL", JSON.stringify(produitEnregistreDansLeLocalStorage));
-
+        //create objet
+        listLocalStorage = [];
+        listLocalStorage.push(objetJson);
+        localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
+        console.log(listLocalStorage );
+console.log(1);
     }
 
 })
