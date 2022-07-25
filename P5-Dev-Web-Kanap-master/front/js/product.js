@@ -39,12 +39,12 @@ fetch("http://localhost:3000/api/products/" + idUrl)
             baliseOption[i].innerHTML = productList.colors;
             i++;
         }
-        function addElementById(variable1,variable2){
-        document.getElementById(variable1).textContent = variable2;
+        function addElementById(variable1, variable2) {
+            document.getElementById(variable1).textContent = variable2;
         }
-        addElementById('title',productList.name);
-        addElementById('description',productList.description);
-        addElementById('price',productList.price);
+        addElementById('title', productList.name);
+        addElementById('description', productList.description);
+        addElementById('price', productList.price);
     })
 
 
@@ -71,37 +71,35 @@ elt.addEventListener('click', function () {
 
 
     //verification si cart dans localStorage et ajout produit dans localStorage
-    if (listLocalStorage) {
-              let lengthCart = listLocalStorage.length;
-        for (let i =0; i+1 <= lengthCart;i++){
-            
-            if (listLocalStorage[i].idProduct==idUrl && listLocalStorage[i].colorItems == colorChoose) {
+    if (objetJson.quantityItem!=0 && objetJson.colorItems){
 
-                listLocalStorage[i].quantityItem = Number(listLocalStorage[i].quantityItem)+ Number(objetJson.quantityItem);
+    if (listLocalStorage) {
+        let lengthCart = listLocalStorage.length;
+        for (let i = 0; i + 1 <= lengthCart; i++) {
+
+            if (listLocalStorage[i].idProduct == idUrl && listLocalStorage[i].colorItems == colorChoose) {
+                listLocalStorage[i].quantityItem = Number(listLocalStorage[i].quantityItem) + Number(objetJson.quantityItem);
                 localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
-                console.log(listLocalStorage);
-                console.log(3);
                 break;
             }
-
-            else if (i+1 == lengthCart) {
+            else if (i + 1 == lengthCart) {
                 // add new item
                 listLocalStorage.push(objetJson);
                 localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
-                console.log(listLocalStorage);
-                console.log(2);
             }
-            
+
         }
     }
-
     else {
         //create objet
         listLocalStorage = [];
         listLocalStorage.push(objetJson);
         localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
-        console.log(listLocalStorage );
-console.log(1);
-    }
+
+    }}
+else{
+    alert('veuillez selectionner une quatité et une couleur');
+  
+}
 
 })
