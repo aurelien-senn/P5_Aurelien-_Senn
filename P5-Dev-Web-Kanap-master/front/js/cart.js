@@ -1,6 +1,5 @@
 
 let listLocalStorage = JSON.parse(localStorage.getItem('objetL'));
-console.log(listLocalStorage);
 lengthlistLocalStorage = listLocalStorage.length;
 
 let total = 0;
@@ -14,8 +13,9 @@ for (let i in listLocalStorage) {
     return product;
   }
   fetchMoviesJSON().then(product => {
-    product;
+
     // creat div
+
     var article = document.createElement('article');
     var divCartItemImg = document.createElement('div');
     var img = document.createElement('img');
@@ -114,11 +114,10 @@ for (let i in listLocalStorage) {
 
 
 }
-
+// form contact 
 const contact = document.getElementById('order');
 contact.addEventListener('click', function () {
   event.preventDefault();
-
   var contactTab = {
     firstName: document.getElementById('firstName').value,
     lastName: document.getElementById('lastName').value,
@@ -126,13 +125,14 @@ contact.addEventListener('click', function () {
     city: document.getElementById('city').value,
     email: document.getElementById('email').value,
   };
-  var bolFirstName=(/^[a-zA-Z\-]+$/.test(contactTab.firstName));
-  var bollastName=/^[a-zA-Z\-]+$/.test(contactTab.lastName);
-  var bolemail=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(contactTab.email);
-  var boladdress=/^[a-zA-Z0-9\s,.'-]{3,}$/.test(contactTab.address);
-  var bolcity=/^[a-zA-Z0-9\u00C0-\u00FF\s,. '-]{3,}$/.test(contactTab.city);
+
+  var bolFirstName = (/^[a-zA-Z\-]+$/.test(contactTab.firstName));
+  var bollastName = /^[a-zA-Z\-]+$/.test(contactTab.lastName);
+  var bolemail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(contactTab.email);
+  var boladdress = /^[a-zA-Z0-9\s,.'-]{3,}$/.test(contactTab.address);
+  var bolcity = /^[a-zA-Z0-9\u00C0-\u00FF\s,. '-]{3,}$/.test(contactTab.city);
   // validate firstName
-  if(bolFirstName)  {
+  if (bolFirstName) {
     firstNameErrorMsg.innerHTML = "";
   } else {
     firstNameErrorMsg.textContent = "ceci n\'est pas un prénom";
@@ -166,9 +166,36 @@ contact.addEventListener('click', function () {
     cityErrorMsg.textContent = "ceci n'est pas une ville";
     event.preventDefault()
   }
-  // post contact et product
-  if (bolFirstName && bollastName && bolemail && boladdress && bolcity){
-    console.log('ok');
+
+
+
+  var contact = contactTab;
+
+  var products = [];
+  for (let i in listLocalStorage) {
+    let product = listLocalStorage[i].idProduct;
+    products.push(product);
   }
+
+  if (bolFirstName && bollastName && bolemail && boladdress && bolcity) {
+    fetch("http://localhost:3000/api/products/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({ contact, products })
+
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((server) => {
+        orderId = server.orderId;
+        console.log(orderId);
+        document.location.href = `confirmation.html?id=${orderId}`;
+      });
+  }
+
 })
 
