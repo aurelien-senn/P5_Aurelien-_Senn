@@ -7,27 +7,27 @@ let totalQuantity = 0;
 
 for (let i in listLocalStorage) {
 
-  async function fetchMoviesJSON() {
+  async function fetchlistLocalStorageJSON() {
     const response = await fetch("http://localhost:3000/api/products/" + listLocalStorage[i].idProduct);
     const product = await response.json();
     return product;
   }
-  fetchMoviesJSON().then(product => {
+  fetchlistLocalStorageJSON().then(product => {
 
     // creat div
 
     var article = document.createElement('article');
-    var divCartItemImg = document.createElement('div');
+    const divCartItemImg = document.createElement('div');
     var img = document.createElement('img');
-    var divCartItemContent = document.createElement('div');
-    var divCartItemContentDescription = document.createElement('div');
+    const divCartItemContent = document.createElement('div');
+    const divCartItemContentDescription = document.createElement('div');
     var h2 = document.createElement('h2');
     var pcolors = document.createElement('p');
     var pPrice = document.createElement('p');
-    var divCartItemContentSettings = document.createElement('div');
-    var divCartItemContentSettingsQuantity = document.createElement('div');
+    const divCartItemContentSettings = document.createElement('div');
+    const divCartItemContentSettingsQuantity = document.createElement('div');
     var inputQuantity = document.createElement('input');
-    var divCartItemContentSettingsDelete = document.createElement('div');
+    const divCartItemContentSettingsDelete = document.createElement('div');
     const pDeleteItem = document.createElement('p');
     var pQuantity = document.createElement('p');
     // add attribut article
@@ -54,7 +54,7 @@ for (let i in listLocalStorage) {
     //Add attribut pDeleteItem
     pDeleteItem.setAttribute('class', 'deleteItem');
     // sel parent et ajout balise
-    var nodeArticle = document.getElementById("cart__items");
+    const nodeArticle = document.getElementById("cart__items");
     nodeArticle.appendChild(article);
     var nodeDivCartItem = document.getElementsByClassName("cart__item")[0];
     nodeDivCartItem.appendChild(divCartItemImg);
@@ -132,6 +132,7 @@ contact.addEventListener('click', function () {
   var boladdress = /^[a-zA-Z0-9\s,.'-]{3,}$/.test(contactTab.address);
   var bolcity = /^[a-zA-Z0-9\u00C0-\u00FF\s,. '-]{3,}$/.test(contactTab.city);
   // validate firstName
+
   if (bolFirstName) {
     firstNameErrorMsg.innerHTML = "";
   } else {

@@ -4,19 +4,19 @@ var url = new URL(urlProduct);
 var idUrl = url.searchParams.get("id");
 
 
-
+console.log('ok');
 
 //recupere array d un produit
-fetch("http://localhost:3000/api/products/" + idUrl)
-    .then(function (data) {
-        if (data.ok) {
-            return data.json();
-        }
-    })
+async function fetchProductJSON() {
+    var response = await fetch("http://localhost:3000/api/products/" + idUrl);
+    var productList = await response.json();
+    return productList;
+  }
 
 
+    fetchProductJSON().then(productList => {
     //insere le produit dans la page
-    .then(function (productList) {
+    console.log(productList);
         //add balise <img>
         let imageProduct = document.createElement('img');
         const classProductImgHtml = document.querySelector('.item__img');
@@ -45,7 +45,7 @@ fetch("http://localhost:3000/api/products/" + idUrl)
         addElementById('title', productList.name);
         addElementById('description', productList.description);
         addElementById('price', productList.price);
-    })
+})
 
 
 //////////////////////
@@ -68,22 +68,29 @@ elt.addEventListener('click', function () {
 
     //conversion json ==> javascript
     let listLocalStorage = JSON.parse(localStorage.getItem('objetL'));
-
+    
 
     //verification si cart dans localStorage et ajout produit dans localStorage
     if (objetJson.quantityItem != 0 && objetJson.colorItems) {
-
-        if (listLocalStorage) {
-            let lengthCart = listLocalStorage.length;
+       
+        let lengthCart = listLocalStorage.length;
+        console.log(lengthCart);
+        if (listLocalStorage && lengthCart!=0) {
+            
+            console.log('ok5');
+            
             for (let i = 0; i + 1 <= lengthCart; i++) {
-
+                console.log('ok2');
                 if (listLocalStorage[i].idProduct == idUrl && listLocalStorage[i].colorItems == colorChoose) {
+                   
                     listLocalStorage[i].quantityItem = Number(listLocalStorage[i].quantityItem) + Number(objetJson.quantityItem);
                     localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
                     break;
                 }
-                else if (i + 1 == lengthCart) {
+                else if (i +1 == lengthCart) {
+                    console.log('ok2');
                     // add new item
+                    console.log('ok5');
                     listLocalStorage.push(objetJson);
                     localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
                 }
@@ -92,11 +99,13 @@ elt.addEventListener('click', function () {
         }
         else {
             //create objet
+            console.log('ok3');
             listLocalStorage = [];
             listLocalStorage.push(objetJson);
             localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
 
         }
+        console.log('ok4');
     }
     else {
         alert('veuillez selectionner une quatité et une couleur');
