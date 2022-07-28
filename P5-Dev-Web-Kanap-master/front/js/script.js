@@ -11,6 +11,10 @@ fetch("http://localhost:3000/api/products")
         
        
         for (productList of productList) {
+
+
+
+            
             document.querySelector(".items").innerHTML +=
                 `<a href="product.html?id=${productList._id }">
                 <article>
