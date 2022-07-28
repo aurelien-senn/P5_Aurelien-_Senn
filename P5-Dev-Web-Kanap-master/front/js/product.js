@@ -82,30 +82,32 @@ elt.addEventListener('click', function () {
         listLocalStorage.push(objetJson);
         localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
         confirmCartOrIndex();
-    
+
     }
     //regex for number between 1 to 100
     var bolRegexQuantity = (/^[1-9]$|^[1-9][0-9]$|^(100)$/.test(objetJson.quantityItem));
-    // verification if quantity between 1 and 100
+    // verification if quantity between 1 and 100 
     if (bolRegexQuantity == false) {
         alert('Veuillez saisir une quantité entre 1 et 100');
     } else {
-        //verification si cart dans localStorage et ajout produit dans localStorage
+        //verification if color is select
         if (objetJson.colorItems) {
+            //verificate if listLocalStorage exist
             if (listLocalStorage) {
                 let lengthtCart = listLocalStorage.length;
                 console.log(lengthtCart);
+                //verificate if listLocalstorage isn't empty
                 if (lengthtCart != 0) {
+                    //find if product in listLocalStorage
                     for (let i = 0; i + 1 <= lengthtCart; i++) {
                         if (listLocalStorage[i].idProduct == idUrl && listLocalStorage[i].colorItems == colorChoose) {
                             listLocalStorage[i].quantityItem = Number(listLocalStorage[i].quantityItem) + Number(objetJson.quantityItem);
                             localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
                             confirmCartOrIndex();
-                        } else if(i + 1 == lengthtCart) {
+                        } else if (i + 1 == lengthtCart) {
                             pushAndConfirmAddCart();
                         }
                     }
-
                 }
                 else {
                     pushAndConfirmAddCart();
@@ -115,11 +117,21 @@ elt.addEventListener('click', function () {
                 //create objet
                 listLocalStorage = [];
                 pushAndConfirmAddCart();
-
-        } 
+            }
         } else {
             alert('veuillez selectionner une couleur');
         }
     }
 
 })
+let listLocalStorage = JSON.parse(localStorage.getItem('objetL'));
+let quantityCart =0;
+if (listLocalStorage){
+    
+    for (let i in listLocalStorage){
+        quantityCart = quantityCart + parseInt(listLocalStorage[i].quantityItem);
+    }
+}
+const li =document.getElementsByTagName('li');
+
+li[4].textContent =`Panier (${quantityCart})`;

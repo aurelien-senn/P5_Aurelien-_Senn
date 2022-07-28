@@ -1,9 +1,8 @@
 
 let listLocalStorage = JSON.parse(localStorage.getItem('objetL'));
-
 let total = 0;
 let totalQuantity = 0;
-function viewCartEmpty(){
+function viewCartEmpty() {
   const h1 = document.getElementsByTagName('h1');
   const aH1 = document.createElement('a')
   aH1.textContent = 'ici';
@@ -14,7 +13,7 @@ function viewCartEmpty(){
 //if Cart empty 
 if (listLocalStorage) {
   lengthlistLocalStorage = listLocalStorage.length;
-    if (lengthlistLocalStorage == 0) {
+  if (lengthlistLocalStorage == 0) {
     viewCartEmpty()
   }
 }
@@ -159,7 +158,7 @@ contact.addEventListener('click', function () {
   // validate firstName
 
   // verification if quantity between 1 and 100
-  function verificateFormatInput(bolInput, idErrorMessage, Message){
+  function verificateFormatInput(bolInput, idErrorMessage, Message) {
     if (bolInput) {
       idErrorMessage.innerHTML = "";
     } else {
@@ -204,3 +203,13 @@ contact.addEventListener('click', function () {
 
 })
 
+let quantityCart =0;
+    if (listLocalStorage){
+        
+        for (let i in listLocalStorage){
+            quantityCart = quantityCart + parseInt(listLocalStorage[i].quantityItem);
+        }
+    }
+    const li =document.getElementsByTagName('li');
+   
+    li[4].textContent =`Panier (${quantityCart})`;
