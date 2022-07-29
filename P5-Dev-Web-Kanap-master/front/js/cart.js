@@ -133,8 +133,18 @@ for (let i in listLocalStorage) {
         nodeTotalPrice.textContent = total;
       }
     }
-  })
-
+  }).catch(function() {
+    var nodeProductDelete=document.querySelector('#limitedWidthBlock');
+    console.log(nodeProductDelete);
+    nodeProductDelete.remove();
+    var nodeParentMessageErreur = document.getElementsByTagName('main');
+    console.log(nodeParentMessageErreur);
+    var p = document.createElement('p')
+    p.setAttribute('id','messageErreur')
+    p.textContent = "Ooops, il semble qu'il y ai un problème!!!";
+    nodeParentMessageErreur[0].appendChild(p);
+    
+  });
 
 }
 // form contact 

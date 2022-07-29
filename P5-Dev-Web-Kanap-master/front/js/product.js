@@ -14,7 +14,7 @@ function confirmCartOrIndex() {
 
 //regex for between 1 to 100
 
-
+var productList;
 
 //recupere array d un produit
 async function fetchProductJSON() {
@@ -24,9 +24,10 @@ async function fetchProductJSON() {
 }
 
 
+    
 fetchProductJSON().then(productList => {
-    //insere le produit dans la page
-
+    //add product in page if productList exist
+   
     //add balise <img>
     let imageProduct = document.createElement('img');
     const classProductImgHtml = document.querySelector('.item__img');
@@ -55,8 +56,20 @@ fetchProductJSON().then(productList => {
     addElementById('title', productList.name);
     addElementById('description', productList.description);
     addElementById('price', productList.price);
-})
 
+
+//if problem with idUrl or backend
+}).catch(function() {
+
+    var nodeProductDelete=document.getElementsByTagName('article');
+    console.log(nodeProductDelete[0]);
+    nodeProductDelete[0].remove();
+    var nodeParentMessageErreur = document.querySelector('.item');
+    var p = document.createElement('p')
+    p.setAttribute('id','messageErreur')
+    p.textContent = "Ooops, il semble qu'il y ai un problème!!!";
+    nodeParentMessageErreur.appendChild(p);
+});
 
 //////////////////////
 //     add cart     //
