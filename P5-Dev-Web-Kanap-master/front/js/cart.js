@@ -2,6 +2,7 @@
 let listLocalStorage = JSON.parse(localStorage.getItem('objetL'));
 let total = 0;
 let totalQuantity = 0;
+
 function viewCartEmpty() {
   const h1 = document.getElementsByTagName('h1');
   const aH1 = document.createElement('a')
@@ -9,7 +10,9 @@ function viewCartEmpty() {
   h1[0].textContent = `Votre panier est vide, vous trouverez nos super canapé,`;
   aH1.setAttribute('href', 'index.html')
   h1[0].appendChild(aH1);
-}
+  const deleteCart = document.getElementsByClassName('cart');
+  deleteCart[0].style.display="none";
+  }
 //if Cart empty 
 if (listLocalStorage) {
   lengthlistLocalStorage = listLocalStorage.length;
@@ -90,7 +93,7 @@ for (let i in listLocalStorage) {
     pcolors.textContent = listLocalStorage[i].colorItems;
     //calcul total par article
     var pricebyvanap = Number(listLocalStorage[i].quantityItem) * product.price;
-    pPrice.textContent = pricebyvanap + " €";
+    pPrice.textContent = product.price + " €";
     pQuantity.textContent = "Qté : ";
     pDeleteItem.textContent = "Supprimer";
     // calcul total et ajout
@@ -113,7 +116,8 @@ for (let i in listLocalStorage) {
       var bolRegexQuantity = (/^[1-9]$|^[1-9][0-9]$|^(100)$/.test(inputQuantity.value));
       if (bolRegexQuantity == false) {
         alert('Veuillez saisir une quantité entre 1 et 100');
-        inputQuantity.value = "listLocalStorage[i].quantityItem";
+        
+        inputQuantity.value = listLocalStorage[i].quantityItem;
       }
       else {
         var differencyQuantity = this.value - listLocalStorage[i].quantityItem;
@@ -124,7 +128,7 @@ for (let i in listLocalStorage) {
         //change price
         var oldPrice = pricebyvanap;
         pricebyvanap = Number(listLocalStorage[i].quantityItem) * product.price;
-        pPrice.textContent = pricebyvanap + " €";
+        pPrice.textContent = product.price + " €";
         //change quantity
         totalQuantity = totalQuantity + differencyQuantity;
         nodeTotalquantity.textContent = totalQuantity;
@@ -143,7 +147,6 @@ for (let i in listLocalStorage) {
     p.setAttribute('id','messageErreur')
     p.textContent = "Ooops, il semble qu'il y ai un problème!!!";
     nodeParentMessageErreur[0].appendChild(p);
-    
   });
 
 }

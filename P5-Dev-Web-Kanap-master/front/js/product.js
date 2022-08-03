@@ -7,9 +7,7 @@ var idUrl = url.searchParams.get("id");
 function confirmCartOrIndex() {
     if (confirm("article ajouté avec succès au panier. souhaitez-vous aller au panier?")) {
         document.location.href = `cart.html`;
-    } else {
-        document.location.href = `index.html`;
-    }
+    } 
 }
 
 //regex for between 1 to 100
@@ -117,7 +115,9 @@ elt.addEventListener('click', function () {
                             listLocalStorage[i].quantityItem = Number(listLocalStorage[i].quantityItem) + Number(objetJson.quantityItem);
                             localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
                             confirmCartOrIndex();
-                        } else if (i + 1 == lengthtCart) {
+                            break;
+                        }
+                        else if(i + 1 == lengthtCart) {
                             pushAndConfirmAddCart();
                         }
                     }
