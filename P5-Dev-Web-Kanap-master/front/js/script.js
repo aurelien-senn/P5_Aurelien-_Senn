@@ -7,12 +7,12 @@ fetch("http://localhost:3000/api/products")
     })
 
     .then(function (productList) {
-        
+
 
         for (productList of productList) {
 
             var items = document.querySelector(".items");
-           
+
             var a = document.createElement('a');
             var article = document.createElement('article');
             var image = document.createElement('img');
@@ -33,23 +33,23 @@ fetch("http://localhost:3000/api/products")
             article.appendChild(h3);
             article.appendChild(p);
         }
-    
-    
-}).catch(function() {
-    var p = document.createElement('p')
-    var items = document.querySelector(".items");
-    p.setAttribute('id','messageErreur')
-    p.textContent = "Ooops, il semble qu'il y ai un problème!!!";
-    items.appendChild(p);
-});
-    let listLocalStorage = JSON.parse(localStorage.getItem('objetL'));
-    let quantityCart =0;
-    if (listLocalStorage){
-        
-        for (let i in listLocalStorage){
-            quantityCart = quantityCart + parseInt(listLocalStorage[i].quantityItem);
-        }
+
+
+    }).catch(function () {
+        var p = document.createElement('p')
+        var items = document.querySelector(".items");
+        p.setAttribute('id', 'messageErreur')
+        p.textContent = "Ooops, il semble qu'il y ai un problème!!!";
+        items.appendChild(p);
+    });
+let listLocalStorage = JSON.parse(localStorage.getItem('objetL'));
+let quantityCart = 0;
+if (listLocalStorage && listLocalStorage != 0) {
+
+    for (let i in listLocalStorage) {
+        quantityCart = quantityCart + parseInt(listLocalStorage[i].quantityItem);
     }
-  const li =document.getElementsByTagName('li');
-   
-    li[4].textContent =`Panier (${quantityCart})`;
+    const li = document.getElementsByTagName('li');
+
+    li[4].textContent = `Panier (${quantityCart})`;
+}

@@ -87,7 +87,7 @@ elt.addEventListener('click', function () {
 
     //conversion json ==> javascript
     let listLocalStorage = JSON.parse(localStorage.getItem('objetL'));
-    console.log(listLocalStorage);
+  
 
     function pushAndConfirmAddCart() {
         listLocalStorage.push(objetJson);
@@ -138,13 +138,14 @@ elt.addEventListener('click', function () {
 
 })
 let listLocalStorage = JSON.parse(localStorage.getItem('objetL'));
+
 let quantityCart =0;
-if (listLocalStorage){
+if (listLocalStorage && listLocalStorage!=0){
     
     for (let i in listLocalStorage){
         quantityCart = quantityCart + parseInt(listLocalStorage[i].quantityItem);
     }
-}
-const li =document.getElementsByTagName('li');
+    const li =document.getElementsByTagName('li');
 
 li[4].textContent =`Panier (${quantityCart})`;
+}

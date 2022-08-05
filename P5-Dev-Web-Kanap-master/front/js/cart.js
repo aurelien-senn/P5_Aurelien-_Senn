@@ -109,6 +109,9 @@ for (let i in listLocalStorage) {
         listLocalStorage.splice(i, 1);
         localStorage.setItem("objetL", JSON.stringify(listLocalStorage));
         document.location.reload(true);
+          if(listLocalStorage.length == 0){
+          localStorage.clear();
+        }
       }
     })
     //modifictaion quantity input
@@ -139,7 +142,6 @@ for (let i in listLocalStorage) {
     }
   }).catch(function() {
     var nodeProductDelete=document.querySelector('#limitedWidthBlock');
-    console.log(nodeProductDelete);
     nodeProductDelete.remove();
     var nodeParentMessageErreur = document.getElementsByTagName('main');
     console.log(nodeParentMessageErreur);
@@ -209,7 +211,6 @@ contact.addEventListener('click', function () {
       })
       .then((server) => {
         orderId = server.orderId;
-        console.log(orderId);
         document.location.href = `confirmation.html?id=${orderId}`;
       });
   }
@@ -217,12 +218,13 @@ contact.addEventListener('click', function () {
 })
 
 let quantityCart =0;
-    if (listLocalStorage){
+    if (listLocalStorage && listLocalStorage != 0){
         
         for (let i in listLocalStorage){
             quantityCart = quantityCart + parseInt(listLocalStorage[i].quantityItem);
         }
-    }
-    const li =document.getElementsByTagName('li');
+        const li =document.getElementsByTagName('li');
    
-    li[4].textContent =`Panier (${quantityCart})`;
+        li[4].textContent =`Panier (${quantityCart})`;
+    }
+    
